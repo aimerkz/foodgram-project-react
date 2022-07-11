@@ -7,6 +7,7 @@ ROLE_CHOISES = (
     ('admin', 'admin'),
 )
 
+
 class User(AbstractUser):
     """Кастомная модель юзера"""
     email = models.EmailField(
@@ -40,12 +41,12 @@ class User(AbstractUser):
     )
 
     REQUIRED_FIELDS = [
-        'email', 
-        'username', 
-        'password', 
+        'email',
+        'username',
+        'password',
         'first_name',
         'last_name'
-        ]
+    ]
 
     class Meta:
         ordering = ['username']
@@ -57,6 +58,6 @@ class User(AbstractUser):
                 name='unique_username_email',
             )
         ]
-     
+
     def __str__(self):
-         return self.username
+        return self.username
