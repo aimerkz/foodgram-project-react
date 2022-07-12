@@ -1,20 +1,35 @@
 import csv
-
-from django.core.management.base import BaseCommand
+import os
 
 from recipes.models import Ingredient
 
+from django.conf import settings
+from django.core.management.base import BaseCommand
+
+
+def ingredient_create(row):
+    Ingredient.objects.get_or_create(
+        name=row[0],
+        measurement_unit=row[1],
+    )
+
+action = {
+    'ingredients.csv': ingredient_create,
+}
 
 class Command(BaseCommand):
-    """Модель импорта данных из csv"""
+    def add_arguments(self, parser):
+        parser.add_argument(
+            'filename',
+            nargs='+',
+            type=str
+        )
+    
     def handle(self, *args, **options):
-        with open(
-            'recipes/data/ingredients.csv', encoding='utf-8'
-        ) as f:
-            reader = csv.reader(f)
-            for row in reader:
-                name, unit = row
-                Ingredient.objects.get_or_create(
-                    name=name, measurement_unit=unit)
-        self.stdout.write(
-            self.style.SUCCESS('Successfully loaded ingredients'))
+        for filename in options['filename']:
+            path = os.path.join(settings.BASE_DIR, 'data/') + filename
+            with open(path, 'r', encoding='utf-8') as file:
+                reader = csv.reader(file)
+                next(reader)
+                for row in reader:
+                    action[filename](row)

@@ -26,7 +26,7 @@ class RecipeAdmin(admin.ModelAdmin):
 
 
 class IngredientRecipesAdmin(admin.ModelAdmin):
-    list_display = ('ingredients', 'recipes', 'count')
+    list_display = ('ingredients', 'recipe', 'count')
 
 
 class RecipeTagAdmin(admin.ModelAdmin):
