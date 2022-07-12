@@ -42,7 +42,6 @@ class User(AbstractUser):
 
     REQUIRED_FIELDS = [
         'email',
-        'username',
         'password',
         'first_name',
         'last_name'
