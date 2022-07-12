@@ -1,6 +1,6 @@
 from django.db import models
 from colorfield.fields import ColorField
-from users.models import User
+from users.models import CustomUser
 from django.core.validators import MinValueValidator
 
 
@@ -67,7 +67,7 @@ class Recipe(models.Model):
         related_name='recipes'
     )
     author = models.ForeignKey(
-        User,
+        CustomUser,
         on_delete=models.CASCADE,
         verbose_name='Автор',
         related_name='recipes'
@@ -160,7 +160,7 @@ class RecipeTag(models.Model):
 class ShoppingList(models.Model):
     """Модель Список покупок"""
     user = models.ForeignKey(
-        User,
+        CustomUser,
         on_delete=models.CASCADE,
         verbose_name='Пользователь'
     )
@@ -187,7 +187,7 @@ class ShoppingList(models.Model):
 class RecipeFavorites(models.Model):
     """Модель Избранные рецепты"""
     user = models.ForeignKey(
-        User,
+        CustomUser,
         verbose_name='Пользователь',
         on_delete=models.CASCADE
     )
@@ -214,13 +214,13 @@ class RecipeFavorites(models.Model):
 class Follow(models.Model):
     """Модель Подписки"""
     user = models.ForeignKey(
-        User,
+        CustomUser,
         verbose_name='Подписчик',
         on_delete=models.CASCADE,
         related_name='follower'
     )
     author = models.ForeignKey(
-        User,
+        CustomUser,
         verbose_name='Автор рецепта',
         on_delete=models.CASCADE,
         related_name='following'

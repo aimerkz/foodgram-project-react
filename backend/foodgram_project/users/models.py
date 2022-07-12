@@ -2,47 +2,17 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-ROLE_CHOISES = (
-    ('user', 'user'),
-    ('admin', 'admin'),
-)
-
-
-class User(AbstractUser):
+class CustomUser(AbstractUser):
     """Кастомная модель юзера"""
     email = models.EmailField(
         'Электронная почта',
         blank=False, null=False,
         unique=True, max_length=254
     )
-    password = models.CharField(
-        'Пароль',
-        blank=False, null=False,
-        unique=True, max_length=128
-    )
-    username = models.CharField(
-        'Юзернэйм',
-        max_length=150,
-        unique=True
-    )
-    first_name = models.CharField(
-        'Имя',
-        blank=True, null=True,
-        max_length=150
-    )
-    last_name = models.CharField(
-        'Фамилия',
-        blank=True, null=True,
-        max_length=150
-    )
-    role = models.CharField(
-        choices=ROLE_CHOISES, default='user',
-        max_length=9
-    )
 
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [
-        'email',
-        'password',
+        'username',
         'first_name',
         'last_name'
     ]
