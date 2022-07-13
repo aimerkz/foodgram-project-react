@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 from api.views import TagViewSet
 from users.views import CustomUserViewSet
@@ -13,5 +13,6 @@ router.register('users', CustomUserViewSet, basename='users')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('auth/', include('djoser.urls.authtoken')),
+    path('', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]

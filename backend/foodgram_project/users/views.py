@@ -1,12 +1,10 @@
 from api.pagination import CustomPagination
-from rest_framework import viewsets
+from djoser.views import UserViewSet
 from users.serializers import CustomUserSerializer
 
 from users.models import CustomUser
 
 
-class CustomUserViewSet(viewsets.ModelViewSet):
+class CustomUserViewSet(UserViewSet):
     """Вьюсэт Юзер"""
-    queryset = CustomUser.objects.all()
     pagination_class = CustomPagination
-    serializer_class = CustomUserSerializer
