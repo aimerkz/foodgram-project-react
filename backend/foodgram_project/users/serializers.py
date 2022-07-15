@@ -21,15 +21,15 @@ class CustomUserSerializer(UserSerializer):
             'is_subscribed',
             'password'
         )
-        read_only_fields = ('id', 'is_subscribed')
+        read_only_fields = ('is_subscribed',)
         extra_kwargs = {"password": {'write_only': True}}
     
     def get_is_subscribed(self, obj):
         """Метод для проверки подписки пользователя"""
         user = self.context.get('request').user
-        if user.is_anonymous or (user == obj):
+        if user.is_anonymous:
             return False
-        return Follow.objects.filter(id=obj.id).exists()
+        return Follow.objects.filter(user=user, author=obj.id).exists()
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):

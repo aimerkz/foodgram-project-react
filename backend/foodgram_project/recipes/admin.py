@@ -26,23 +26,23 @@ class RecipeAdmin(admin.ModelAdmin):
 
 
 class IngredientRecipesAdmin(admin.ModelAdmin):
-    list_display = ('ingredients', 'recipe', 'count')
+    list_display = ('ingredients', 'recipes', 'count')
 
 
 class RecipeTagAdmin(admin.ModelAdmin):
-    list_display = ('recipe', 'tag')
+    list_display = ('recipes', 'tag')
 
 
 class ShoppingListAdmin(admin.ModelAdmin):
-    list_display = ('user', 'recipe')
-    search_fields = ('user', 'recipe')
-    list_filter = ('user', 'recipe')
+    list_display = ('user', 'recipes')
+    search_fields = ('user', 'recipes')
+    list_filter = ('user', 'recipes')
 
 
 class RecipeFavoritesAdmin(admin.ModelAdmin):
-    list_display = ('user', 'recipe')
-    search_fields = ('user', 'recipe')
-    list_filter = ('user', 'recipe')
+    list_display = ('user', 'recipes')
+    search_fields = ('user', 'recipes')
+    list_filter = ('user', 'recipes')
 
 
 class FollowAdmin(admin.ModelAdmin):
