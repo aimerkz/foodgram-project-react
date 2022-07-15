@@ -21,7 +21,6 @@ class RecipeAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
     def count_favorited(self, obj):
-        print(obj)
         """Метод выводит общее число добавлений рецепта в избранное"""
         return obj.recipefavorites_set.count()
 
