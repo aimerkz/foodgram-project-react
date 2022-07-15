@@ -3,12 +3,9 @@ from api.serializers import (
 from api.pagination import CustomPagination
 from recipes.models import Tag, Ingredient, Recipe
 
-from rest_framework import viewsets, status
-
-from drf_yasg.utils import swagger_auto_schema
+from rest_framework import viewsets
 
 
-@swagger_auto_schema(responses={status.HTTP_200_OK: TagSerializer()})
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсэт Тег
     Получение списка тегов / 
@@ -19,7 +16,6 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = CustomPagination
 
 
-@swagger_auto_schema(responses={status.HTTP_200_OK: IngredientSerializer()})
 class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсэт Ингредиенты
     Получение списка ингредиентов / 
@@ -29,7 +25,6 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = CustomPagination
 
 
-@swagger_auto_schema(responses={status.HTTP_200_OK: RecipeSerializer()})
 class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсэт Рецепт
     Получение списка рецептов / 
@@ -41,3 +36,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
     pagination_class = CustomPagination
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
