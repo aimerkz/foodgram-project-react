@@ -65,7 +65,7 @@ class Recipe(models.Model):
         verbose_name='Ингредиенты',
         related_name='recipes'
     )
-    tag = models.ManyToManyField(
+    tags = models.ManyToManyField(
         Tag,
         verbose_name='Теги',
     )
@@ -144,7 +144,7 @@ class RecipeTag(models.Model):
         verbose_name='Рецепт',
         on_delete=models.CASCADE
     )
-    tag = models.ForeignKey(
+    tags = models.ForeignKey(
         Tag,
         on_delete=models.CASCADE,
         verbose_name='Тег'
@@ -155,7 +155,7 @@ class RecipeTag(models.Model):
         verbose_name_plural = 'Теги рецепта'
 
     def __str__(self):
-        return f'{self.tag.name} {self.recipes.name}'
+        return f'{self.tags.name} {self.recipes.name}'
 
 
 class ShoppingList(models.Model):

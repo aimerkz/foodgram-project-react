@@ -33,7 +33,7 @@ class IngredientRecipesSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'measurement_unit', 'count']
 
 
-class RecipeSerializer(serializers.Serializer):
+class RecipeSerializer(serializers.ModelSerializer):
     """Сериализатор Рецепт"""
     id = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all())
     image = Base64ImageField()

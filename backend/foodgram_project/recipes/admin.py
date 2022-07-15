@@ -17,11 +17,10 @@ class IngredientAdmin(admin.ModelAdmin):
 
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name', 'author', 'count_favorited')
-    list_filter = ('name', 'author', 'tag')
+    list_filter = ('name', 'author', 'tags')
     empty_value_display = '-пусто-'
 
     def count_favorited(self, obj):
-        print(obj)
         """Метод выводит общее число добавлений рецепта в избранное"""
         return obj.recipefavorites_set.count()
 
@@ -31,7 +30,7 @@ class IngredientRecipesAdmin(admin.ModelAdmin):
 
 
 class RecipeTagAdmin(admin.ModelAdmin):
-    list_display = ('recipes', 'tag')
+    list_display = ('recipes', 'tags')
 
 
 class ShoppingListAdmin(admin.ModelAdmin):
