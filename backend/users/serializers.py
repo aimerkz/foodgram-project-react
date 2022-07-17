@@ -8,7 +8,7 @@ from recipes.models import Follow
 
 class CustomUserSerializer(UserSerializer):
     """Сериализатор для получения списка юзеров и конкретного юзера"""
-    is_subscribed = SerializerMethodField()
+    is_subscribed = SerializerMethodField(read_only=True)
 
     class Meta:
         model = CustomUser
@@ -19,10 +19,7 @@ class CustomUserSerializer(UserSerializer):
             'first_name',
             'last_name',
             'is_subscribed',
-            'password'
         )
-        read_only_fields = ('is_subscribed',)
-        extra_kwargs = {"password": {'write_only': True}}
     
     def get_is_subscribed(self, obj):
         """Метод для проверки подписки пользователя"""

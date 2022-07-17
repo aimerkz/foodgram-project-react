@@ -19,7 +19,8 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
 class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсэт Ингредиенты
     Получение списка ингредиентов / 
-    конкретного ингредиента"""
+    конкретного ингредиента
+    """
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     pagination_class = CustomPagination
