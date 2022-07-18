@@ -116,7 +116,7 @@ class IngredientRecipes(models.Model):
         Recipe,
         on_delete=models.CASCADE,
     )
-    count = models.IntegerField(
+    amount = models.IntegerField(
         'Количество',
         validators=[
             MinValueValidator(1, 'Количество не может быть меньше 1')

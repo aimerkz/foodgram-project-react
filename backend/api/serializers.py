@@ -31,7 +31,7 @@ class IngredientRecipesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IngredientRecipes
-        fields = ['id', 'name', 'measurement_unit', 'count']
+        fields = ['id', 'name', 'measurement_unit', 'amount']
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -92,28 +92,33 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
             if ingredient in ingredients_result:
                 raise serializers.ValidationError('Ингредиент уже добавлен в рецепт')
-            ingredients_result.append(ingredient)
-            if int(ingredient_item['count']) < 0:
+            amount=ingredient_item['amount']
+            if int(ingredient_item['amount']) < 0:
                 raise serializers.ValidationError({
-                    'ingredients': ('Ну указано количество ингредиента')
+                    'ingredients': ('Не указано количество ингредиента')
                 })
+            ingredients_result.append({'ingredients': ingredient, 'amount': amount})
         data['ingredients'] = ingredients_result
         return data
+
+    def create_ingredients(self, ingredients, recipes):
+        """Метод для добавления ингредиентов"""
+        for ingredient in ingredients:
+            IngredientRecipes.objects.create(
+                recipes=recipes,
+                ingredients=ingredient['ingredients'],
+                amount=ingredient.get('amount'),
+            )
 
     def create(self, validated_data):
         """Метод для создания рецепта"""
         image = validated_data.pop('image')
-        ingredients = validated_data['ingredients']
+        ingredients_data = validated_data.pop('ingredients')
         recipes = Recipe.objects.create(
             image=image,
             **validated_data
         )
         tags = self.initial_data.get('tags')
         recipes.tags.set(tags)
-        for ingredient in ingredients:
-            IngredientRecipes.objects.create(
-                recipes=recipes,
-                ingredient=ingredient.get('id'),
-                count=ingredient.get('count')
-            )
+        self.create_ingredients(ingredients_data, recipes)
         return recipes
