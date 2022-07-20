@@ -1,16 +1,17 @@
+from rest_framework.validators import UniqueTogetherValidator
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from users.serializers import CustomUserSerializer
 
 from recipes.models import (
-    Tag, Ingredient, IngredientRecipes, Recipe)
+    Tag, Ingredient, IngredientRecipes, Recipe, RecipeFavorites)
 
 from drf_extra_fields.fields import Base64ImageField
 
 
 class TagSerializer(serializers.ModelSerializer):
-    """Сериализатор Тег"""
+    """Сериализатор Теги"""
     class Meta:
         model = Tag
         fields = '__all__'
@@ -136,3 +137,21 @@ class RecipeSerializer(serializers.ModelSerializer):
         self.create_ingredients(validated_data.get('ingredients'), instance)
         instance.save()
         return instance
+
+
+class RecipeFavoritesSerializer(serializers.ModelSerializer):
+    """Сериализатор Списки избранных рецептов"""
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+    image = Base64ImageField(max_length=None, use_url=False,)
+    cooking_time = serializers.IntegerField()
+
+    class Meta:
+        model = RecipeFavorites
+        fields = ['id', 'name', 'image', 'cooking_time']
+        validators = (
+            UniqueTogetherValidator(
+                queryset=RecipeFavorites.objects.all(),
+                fields=('user', 'recipes')
+            )
+        )
