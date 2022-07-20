@@ -1,3 +1,4 @@
+from requests import request
 from rest_framework.validators import UniqueTogetherValidator
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -5,7 +6,8 @@ from rest_framework import serializers
 from users.serializers import CustomUserSerializer
 
 from recipes.models import (
-    Tag, Ingredient, IngredientRecipes, Recipe, RecipeFavorites)
+    Tag, Ingredient, IngredientRecipes, Recipe, RecipeFavorites,
+    Follow)
 
 from drf_extra_fields.fields import Base64ImageField
 
@@ -155,3 +157,56 @@ class RecipeFavoritesSerializer(serializers.ModelSerializer):
                 fields=('user', 'recipes')
             )
         )
+
+
+class FollowRecipeSerializer(serializers.ModelSerializer):
+    """Урезанный сериализатор для сериализатора Подписки ниже"""
+    image = Base64ImageField()
+
+    class Meta:
+        model = Recipe
+        fields = ['id', 'name', 'image', 'cooking_time']
+        read_only_fields = ['id', 'name', 'image', 'cooking_time']
+
+
+class FollowSerializer(serializers.ModelSerializer):
+    """Сериализатор Подписки"""
+    email = serializers.ReadOnlyField(source='author.email')
+    id = serializers.ReadOnlyField(source='author.id')
+    username =  serializers.ReadOnlyField(source='author.username')
+    first_name = serializers.ReadOnlyField(source='author.first_name')
+    last_name = serializers.ReadOnlyField(source='author.last_name')
+    is_subscribed = serializers.SerializerMethodField()
+    recipes = serializers.SerializerMethodField()
+    recipes_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Follow
+        fields = ['email', 'id', 'username', 'first_name',
+                  'last_name', 'is_subscribed', 'recipes',
+                  'recipes_count'
+        ]
+
+    def get_is_subscribed(self, obj):
+        """Метод для проверки подписки
+        текущего юзера на автора
+        """
+        return Follow.objects.filter(
+            user=obj.user,
+            author=obj.author
+        ).exists()
+        
+    def get_recipes(self, obj):
+        """Метод для получения
+        рецептов автора
+        """
+        queryset = Recipe.objects.filter(
+            author=obj.author
+        )
+        return FollowRecipeSerializer(queryset, many=True).data
+
+    def get_recipes_count(self, obj):
+        """Метод для получения общего
+        количества рецептов автора
+        """
+        return Recipe.objects.filter(author=obj.author).count()
