@@ -6,7 +6,7 @@ from users.serializers import CustomUserSerializer
 
 from recipes.models import (
     Tag, Ingredient, IngredientRecipes, Recipe, RecipeFavorites,
-    Follow)
+    Follow, ShoppingList)
 
 from drf_extra_fields.fields import Base64ImageField
 
@@ -209,3 +209,21 @@ class FollowSerializer(serializers.ModelSerializer):
         количества рецептов автора
         """
         return Recipe.objects.filter(author=obj.author).count()
+
+
+class ShoppingListSerializer(serializers.ModelSerializer):
+    """Сериализатор Список покупок"""
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+    image = Base64ImageField(max_length=None, use_url=False)
+    cooking_time = serializers.IntegerField()
+
+    class Meta:
+        model = ShoppingList
+        fields = ['id', 'name', 'image', 'cooking_time']
+        validators = [
+            UniqueTogetherValidator(
+                queryset=ShoppingList.objects.all(),
+                fields=('user', 'recipes')
+            )
+        ]

@@ -4,7 +4,7 @@ from django.urls import include, path, re_path
 
 from api.views import (
     TagViewSet, IngredientsViewSet, RecipeViewSet,
-    RecipeFavoritesViewSet, FollowViewSet)
+    RecipeFavoritesViewSet, FollowViewSet, ShoppingViewSet)
 from users.views import CustomUserViewSet
 
 app_name = 'api'
@@ -25,4 +25,7 @@ urlpatterns = [
     path('users/<int:id>/subscribe/', 
         FollowViewSet.as_view({'post': 'create',
                                'delete': 'delete'}), name='subscribe'),
+    path('recipes/<int:id>/shopping_cart/',
+        ShoppingViewSet.as_view({'post': 'create',
+                                'delete': 'delete'}), name='shopping_cart'),
 ]
