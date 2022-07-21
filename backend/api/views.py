@@ -1,13 +1,17 @@
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+
 from api.serializers import (
     TagSerializer, IngredientSerializer, RecipeSerializer,
     RecipeFavoritesSerializer, FollowSerializer, ShoppingListSerializer)
 from api.pagination import CustomPagination
-from recipes.models import (Tag, Ingredient, Recipe, RecipeFavorites,
+
+from recipes.models import (IngredientRecipes, Tag, Ingredient, Recipe, RecipeFavorites,
                             Follow, CustomUser, ShoppingList)
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -33,10 +37,8 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
 class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсэт Рецепт
     Получение списка рецептов / 
-    конкретного рецепта / 
-    создание рецепта / 
-    частичное изменение рецепта / 
-    удаление рецепта
+    конкретного рецепта / from urllib import response
+
     """
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
@@ -44,6 +46,39 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+    
+    @action(
+        methods=['GET'],
+        detail=False
+    )
+    def download_shopping_cart(self, request):
+        """Метод для скачивания списка покупок"""
+        shopping_result = {}
+        ingredients = IngredientRecipes.objects.filter(
+            recipes__shoppinglist__user=request.user
+        ).values_list(
+            'ingredients__name',
+            'ingredients__measurement_unit',
+            'amount'
+        )
+
+        for ingredient in ingredients:
+            name = ingredient[0]
+            if name not in shopping_result:
+                shopping_result[name] = {
+                    'measurement_unit': ingredient[1],
+                    'amount': ingredient[2]
+                }
+            else:
+                shopping_result[name]['amount'] += ingredient[2]
+
+        shopping_itog = (f"{name} - {value['amount']} "
+                        f"{value['measurement_unit']}\n"
+                        for name, value in shopping_result.items()
+        )
+        response = HttpResponse(shopping_itog, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename="shoppinglist.txt"'
+        return response
 
 
 class RecipeFavoritesViewSet(viewsets.ModelViewSet):
@@ -67,7 +102,7 @@ class RecipeFavoritesViewSet(viewsets.ModelViewSet):
         serializer = RecipeFavoritesSerializer()
         return Response(serializer.to_representation(instance=recipes),
                         status=status.HTTP_201_CREATED)
-    
+        
     def delete(self, request, *args, **kwargs):
         """Метод для удаления рецепта
         из списка избранного
