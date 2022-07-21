@@ -1,4 +1,3 @@
-from unicodedata import name
 from rest_framework import routers
 
 from django.urls import include, path, re_path
@@ -20,8 +19,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
-    path('users/subscriptions/',
-        FollowViewSet.as_view({'get': 'list'}), name='subscriptions'),
     path('recipes/<int:id>/favorite/',
         RecipeFavoritesViewSet.as_view({'post': 'create',
                                         'delete': 'delete'}), name='favorite'),

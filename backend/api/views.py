@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404
 from api.serializers import (
     TagSerializer, IngredientSerializer, RecipeSerializer,
     RecipeFavoritesSerializer, FollowSerializer)
@@ -84,17 +84,11 @@ class RecipeFavoritesViewSet(viewsets.ModelViewSet):
 
 class FollowViewSet(viewsets.ModelViewSet):
     """Вьюсэт Подписки
-    Получение списка подписок юзера / 
-    создание подписки / 
+    Cоздание подписки / 
     удаление подписки
     """
     serializer_class = FollowSerializer
     pagination_class = CustomPagination
-
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return CustomUser.objects.filter(following__user=self.request.user)
-        return CustomUser.objects.all()
 
     def create(self, request, *args, **kwargs):
         """Метод для создания подписки"""

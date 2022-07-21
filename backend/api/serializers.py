@@ -1,4 +1,3 @@
-from requests import request
 from rest_framework.validators import UniqueTogetherValidator
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -160,7 +159,7 @@ class RecipeFavoritesSerializer(serializers.ModelSerializer):
 
 
 class FollowRecipeSerializer(serializers.ModelSerializer):
-    """Урезанный сериализатор для сериализатора Подписки ниже"""
+    """Урезанный сериализатор Рецепты для сериализатора Подписки ниже"""
     image = Base64ImageField()
 
     class Meta:
