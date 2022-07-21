@@ -5,6 +5,7 @@ from api.serializers import (
     TagSerializer, IngredientSerializer, RecipeSerializer,
     RecipeFavoritesSerializer, FollowSerializer, ShoppingListSerializer)
 from api.pagination import CustomPagination
+from api.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 
 from recipes.models import (IngredientRecipes, Tag, Ingredient, Recipe, RecipeFavorites,
                             Follow, CustomUser, ShoppingList)
@@ -12,6 +13,7 @@ from recipes.models import (IngredientRecipes, Tag, Ingredient, Recipe, RecipeFa
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -22,6 +24,7 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     pagination_class = CustomPagination
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
@@ -31,7 +34,9 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+    permission_classes = [IsAdminOrReadOnly]
     pagination_class = CustomPagination
+    search_fields = ('^name',)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -42,6 +47,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     """
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
+    permission_classes = [IsOwnerOrReadOnly]
     pagination_class = CustomPagination
 
     def perform_create(self, serializer):
@@ -49,7 +55,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     
     @action(
         methods=['GET'],
-        detail=False
+        detail=False,
+        permission_classes=[IsAuthenticated]
     )
     def download_shopping_cart(self, request):
         """Метод для скачивания списка покупок"""
@@ -88,6 +95,7 @@ class RecipeFavoritesViewSet(viewsets.ModelViewSet):
     """
     serializer_class = RecipeFavoritesSerializer
     queryset = RecipeFavorites.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         """Метод для добавления рецепта
@@ -124,6 +132,7 @@ class FollowViewSet(viewsets.ModelViewSet):
     """
     serializer_class = FollowSerializer
     pagination_class = CustomPagination
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         """Метод для создания подписки"""
@@ -154,6 +163,7 @@ class ShoppingViewSet(viewsets.ModelViewSet):
     serializer_class = ShoppingListSerializer
     pagination_class = CustomPagination
     queryset = ShoppingList.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         """Метод для добавление рецепта в 
