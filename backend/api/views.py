@@ -6,14 +6,17 @@ from api.serializers import (
     RecipeFavoritesSerializer, FollowSerializer, ShoppingListSerializer)
 from api.pagination import CustomPagination
 from api.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
+from api.filters import RecipesFilter
 
 from recipes.models import (IngredientRecipes, Tag, Ingredient, Recipe, RecipeFavorites,
                             Follow, CustomUser, ShoppingList)
 
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -36,19 +39,22 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = IngredientSerializer
     permission_classes = [IsAdminOrReadOnly]
     pagination_class = CustomPagination
+    filter_backends = [filters.SearchFilter]
     search_fields = ('^name',)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсэт Рецепт
     Получение списка рецептов / 
-    конкретного рецепта / from urllib import response
+    конкретного рецепта /
 
     """
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
-    permission_classes = [IsOwnerOrReadOnly]
     pagination_class = CustomPagination
+    filter_backends = [DjangoFilterBackend]
+    filter_class = RecipesFilter
+    permission_classes = [IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
