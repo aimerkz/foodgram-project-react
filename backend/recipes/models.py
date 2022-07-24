@@ -137,27 +137,6 @@ class IngredientRecipes(models.Model):
         return f'{self.recipes.name}:{self.ingredients.name}'
 
 
-class RecipeTag(models.Model):
-    """Модель для связи рецепта и тегов"""
-    recipes = models.ForeignKey(
-        Recipe,
-        verbose_name='Рецепт',
-        on_delete=models.CASCADE
-    )
-    tags = models.ForeignKey(
-        Tag,
-        on_delete=models.CASCADE,
-        verbose_name='Тег'
-    )
-
-    class Meta:
-        verbose_name = 'Тег рецепта'
-        verbose_name_plural = 'Теги рецепта'
-
-    def __str__(self):
-        return f'{self.tags.name} {self.recipes.name}'
-
-
 class ShoppingList(models.Model):
     """Модель Список покупок"""
     user = models.ForeignKey(
