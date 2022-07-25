@@ -13,9 +13,11 @@ def ingredient_create(row):
         measurement_unit=row[1],
     )
 
+
 action = {
     'ingredients.csv': ingredient_create,
 }
+
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
@@ -24,7 +26,7 @@ class Command(BaseCommand):
             nargs='+',
             type=str
         )
-    
+
     def handle(self, *args, **options):
         for filename in options['filename']:
             path = os.path.join(settings.BASE_DIR, 'data/') + filename

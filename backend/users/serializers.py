@@ -20,7 +20,7 @@ class CustomUserSerializer(UserSerializer):
             'last_name',
             'is_subscribed',
         )
-    
+
     def get_is_subscribed(self, obj):
         """Метод для проверки подписки пользователя"""
         user = self.context.get('request').user

@@ -8,8 +8,9 @@ from api.pagination import CustomPagination
 from api.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from api.filters import RecipesFilter
 
-from recipes.models import (IngredientRecipes, Tag, Ingredient, Recipe, RecipeFavorites,
-                            Follow, CustomUser, ShoppingList)
+from recipes.models import (IngredientRecipes, Tag, Ingredient, Recipe,
+                            RecipeFavorites, Follow, CustomUser,
+                            ShoppingList)
 
 from rest_framework import viewsets, status, filters
 from rest_framework.response import Response
@@ -21,7 +22,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсэт Тег
-    Получение списка тегов / 
+    Получение списка тегов /
     конкретного тега
     """
     queryset = Tag.objects.all()
@@ -32,7 +33,7 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
 
 class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсэт Ингредиенты
-    Получение списка ингредиентов / 
+    Получение списка ингредиентов /
     конкретного ингредиента
     """
     queryset = Ingredient.objects.all()
@@ -45,7 +46,7 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсэт Рецепт
-    Получение списка рецептов / 
+    Получение списка рецептов /
     конкретного рецепта /
 
     """
@@ -58,7 +59,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-    
+
     @action(
         methods=['GET'],
         detail=False,
@@ -85,12 +86,15 @@ class RecipeViewSet(viewsets.ModelViewSet):
             else:
                 shopping_result[name]['amount'] += ingredient[2]
 
-        shopping_itog = (f"{name} - {value['amount']} "
-                        f"{value['measurement_unit']}\n"
-                        for name, value in shopping_result.items()
+        shopping_itog = (
+            f"{name} - {value['amount']} "
+            f"{value['measurement_unit']}\n"
+            for name, value in shopping_result.items()
         )
         response = HttpResponse(shopping_itog, content_type='text/plain')
-        response['Content-Disposition'] = 'attachment; filename="shoppinglist.txt"'
+        response[
+            'Content-Disposition'
+        ] = 'attachment; filename="shoppinglist.txt"'
         return response
 
 
@@ -116,24 +120,23 @@ class RecipeFavoritesViewSet(viewsets.ModelViewSet):
         serializer = RecipeFavoritesSerializer()
         return Response(serializer.to_representation(instance=recipes),
                         status=status.HTTP_201_CREATED)
-        
+
     def delete(self, request, *args, **kwargs):
         """Метод для удаления рецепта
         из списка избранного
         """
         recipes_id = self.kwargs['id']
         user_id = request.user.id
-        object = get_object_or_404(
-            RecipeFavorites, user__id=user_id,
+        RecipeFavorites.objects.filter(
+            user__id=user_id,
             recipes__id=recipes_id
-        )
-        object.delete()
+        ).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class FollowViewSet(viewsets.ModelViewSet):
     """Вьюсэт Подписки
-    Cоздание подписки / 
+    Cоздание подписки /
     удаление подписки
     """
     serializer_class = FollowSerializer
@@ -154,9 +157,10 @@ class FollowViewSet(viewsets.ModelViewSet):
         """Метод для удаления подписки"""
         author_id = self.kwargs['id']
         user_id = request.user.id
-        subscribe = get_object_or_404(
-            Follow, user__id=user_id, author__id=author_id)
-        subscribe.delete()
+        Follow.objects.filter(
+            user__id=user_id,
+            author__id=author_id
+        ).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -172,7 +176,7 @@ class ShoppingViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        """Метод для добавление рецепта в 
+        """Метод для добавление рецепта в
         список покупок
         """
         recipe_id = self.kwargs['id']
@@ -191,8 +195,8 @@ class ShoppingViewSet(viewsets.ModelViewSet):
         """
         recipe_id = self.kwargs['id']
         user_id = request.user.id
-        object = get_object_or_404(
-            ShoppingList, user__id=user_id, recipes__id=recipe_id
-        )
-        object.delete()
+        ShoppingList.objects.filter(
+            user__id=user_id,
+            recipes__id=recipe_id
+        ).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

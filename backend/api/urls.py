@@ -19,13 +19,13 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
-    path('recipes/<int:id>/favorite/',
-        RecipeFavoritesViewSet.as_view({'post': 'create',
-                                        'delete': 'delete'}), name='favorite'),
-    path('users/<int:id>/subscribe/', 
-        FollowViewSet.as_view({'post': 'create',
-                               'delete': 'delete'}), name='subscribe'),
-    path('recipes/<int:id>/shopping_cart/',
-        ShoppingViewSet.as_view({'post': 'create',
-                                'delete': 'delete'}), name='shopping_cart'),
+    path('recipes/<int:id>/favorite/', RecipeFavoritesViewSet.as_view(
+        {'post': 'create',
+         'delete': 'delete'}), name='favorite'),
+    path('users/<int:id>/subscribe/', FollowViewSet.as_view(
+        {'post': 'create',
+         'delete': 'delete'}), name='subscribe'),
+    path('recipes/<int:id>/shopping_cart/', ShoppingViewSet.as_view(
+        {'post': 'create',
+         'delete': 'delete'}), name='shopping_cart'),
 ]

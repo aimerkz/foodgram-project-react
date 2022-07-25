@@ -87,7 +87,7 @@ class Recipe(models.Model):
         'Описание рецепта'
     )
     pub_date = models.DateTimeField(auto_now_add=True)
-    cooking_time = models.IntegerField(
+    cooking_time = models.PositiveIntegerField(
         'Время приготовления в мин',
         validators=[
             MinValueValidator(

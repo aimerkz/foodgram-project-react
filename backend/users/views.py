@@ -5,14 +5,15 @@ from djoser.views import UserViewSet
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
+
 class CustomUserViewSet(UserViewSet):
     """Вьюсэт Юзер
-    Получение списка юзеров / 
-    конкретного юзера / 
-    создание, обновление / 
+    Получение списка юзеров /
+    конкретного юзера /
+    создание, обновление /
     удаление конкретного юзера /
     изменение пароля /
-    получение текущего юзера / 
+    получение текущего юзера /
     просмотр подписок юзера
     """
     pagination_class = CustomPagination
