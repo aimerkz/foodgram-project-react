@@ -25,6 +25,7 @@ mccabe==0.6.1
 oauthlib==3.2.0
 packaging==21.3
 Pillow==9.2.0
+psycopg2-binary==2.8.6
 pycodestyle==2.8.0
 pycparser==2.21
 pyflakes==2.4.0

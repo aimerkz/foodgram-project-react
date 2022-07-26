@@ -15,7 +15,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='g26@bdkp9b#i50%!o=+7_tryh@gd-(=jsr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', '158.160.0.181', 'localhost', 'web']
 
 
 # Application definition
@@ -73,8 +73,12 @@ WSGI_APPLICATION = 'foodgram_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql'),
+        'NAME': os.getenv('DB_NAME', default='testdb'),
+        'USER': os.getenv('POSTGRES_USER', default='testuser'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='1234s'),
+        'HOST': os.getenv('DB_HOST', default='localhost'),
+        'PORT': os.getenv('DB_PORT', default='5432'),
     }
 }
 
