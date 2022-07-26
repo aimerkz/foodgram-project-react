@@ -1,9 +1,8 @@
-from rest_framework.serializers import SerializerMethodField
 from djoser.serializers import UserCreateSerializer, UserSerializer
-from rest_framework import serializers
-
-from users.models import CustomUser
 from recipes.models import Follow
+from rest_framework import serializers
+from rest_framework.serializers import SerializerMethodField
+from users.models import CustomUser
 
 
 class CustomUserSerializer(UserSerializer):

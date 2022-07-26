@@ -1,23 +1,18 @@
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
-
-from api.serializers import (
-    TagSerializer, IngredientSerializer, RecipeSerializer,
-    RecipeFavoritesSerializer, FollowSerializer, ShoppingListSerializer)
+from api.filters import RecipesFilter
 from api.pagination import CustomPagination
 from api.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
-from api.filters import RecipesFilter
-
-from recipes.models import (IngredientRecipes, Tag, Ingredient, Recipe,
-                            RecipeFavorites, Follow, CustomUser,
-                            ShoppingList)
-
-from rest_framework import viewsets, status, filters
-from rest_framework.response import Response
+from api.serializers import (FollowSerializer, IngredientSerializer,
+                             RecipeFavoritesSerializer, RecipeSerializer,
+                             ShoppingListSerializer, TagSerializer)
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from recipes.models import (CustomUser, Follow, Ingredient, IngredientRecipes,
+                            Recipe, RecipeFavorites, ShoppingList, Tag)
+from rest_framework import filters, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
-
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.response import Response
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):

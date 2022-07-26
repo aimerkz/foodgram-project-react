@@ -1,15 +1,11 @@
-from rest_framework.validators import UniqueTogetherValidator
-from django.shortcuts import get_object_or_404
 from django.db import transaction
-from rest_framework import serializers
-
-from users.serializers import CustomUserSerializer
-
-from recipes.models import (
-    Tag, Ingredient, IngredientRecipes, Recipe, RecipeFavorites,
-    Follow, ShoppingList)
-
+from django.shortcuts import get_object_or_404
 from drf_extra_fields.fields import Base64ImageField
+from recipes.models import (Follow, Ingredient, IngredientRecipes, Recipe,
+                            RecipeFavorites, ShoppingList, Tag)
+from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
+from users.serializers import CustomUserSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):

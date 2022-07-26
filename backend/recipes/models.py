@@ -1,7 +1,7 @@
-from django.db import models
 from colorfield.fields import ColorField
-from users.models import CustomUser
 from django.core.validators import MinValueValidator
+from django.db import models
+from users.models import CustomUser
 
 
 class Tag(models.Model):

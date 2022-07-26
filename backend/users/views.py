@@ -1,7 +1,6 @@
 from api.pagination import CustomPagination
 from api.serializers import FollowSerializer
 from djoser.views import UserViewSet
-
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
