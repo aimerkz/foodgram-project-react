@@ -1,4 +1,4 @@
-from api.filters import RecipesFilter
+from api.filters import RecipesFilter, IngredientSearchFilter
 from api.pagination import CustomPagination
 from api.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from api.serializers import (FollowSerializer, IngredientSerializer,
@@ -6,10 +6,9 @@ from api.serializers import (FollowSerializer, IngredientSerializer,
                              ShoppingListSerializer, TagSerializer)
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
 from recipes.models import (CustomUser, Follow, Ingredient, IngredientRecipes,
                             Recipe, RecipeFavorites, ShoppingList, Tag)
-from rest_framework import filters, status, viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,7 +21,6 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    pagination_class = CustomPagination
     permission_classes = [IsAdminOrReadOnly]
 
 
@@ -34,8 +32,7 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = [IsAdminOrReadOnly]
-    pagination_class = CustomPagination
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [IngredientSearchFilter]
     search_fields = ['^name']
 
 
@@ -43,12 +40,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсэт Рецепт
     Получение списка рецептов /
     конкретного рецепта /
-
     """
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
     pagination_class = CustomPagination
-    filter_backends = [DjangoFilterBackend]
     filterset_class = RecipesFilter
     permission_classes = [IsOwnerOrReadOnly]
 
