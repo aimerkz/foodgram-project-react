@@ -16,8 +16,12 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='g26@bdkp9b#i50%!o=+7_tryh@gd-(=jsr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '158.160.0.181', 'localhost', 'web']
-
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '158.160.0.181',
+    'localhost',
+    'backend'
+]
 
 # Application definition
 
@@ -159,8 +163,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/backend_static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'backend_static')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/backend_media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'backend_media')
