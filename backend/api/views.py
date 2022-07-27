@@ -1,4 +1,4 @@
-from api.filters import RecipesFilter, IngredientSearchFilter
+from api.filters import IngredientSearchFilter, RecipesFilter
 from api.pagination import CustomPagination
 from api.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from api.serializers import (FollowSerializer, IngredientSerializer,
