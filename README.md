@@ -45,7 +45,7 @@ docker-compose up -d
 ```
 - Выполните миграции:
 ```sh
-docker-compose exec web python manage.py migrate
+docker-compose exec backend python manage.py migrate
 ```
 
 - Создайте суперпользователя:
@@ -58,7 +58,7 @@ docker-compose exec backend python manage.py collectstatic --no-input
 ```
 - Заполните базу тестовыми данными:
 ```sh
-docker-compose backend web python manage.py loaddata fixtures.json
+docker-compose backend backend python manage.py loaddata fixtures.json
 ```
 - Перейдите по адресу:
 ```sh
