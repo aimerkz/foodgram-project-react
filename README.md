@@ -58,7 +58,7 @@ docker-compose exec backend python manage.py collectstatic --no-input
 ```
 - Заполните базу тестовыми данными:
 ```sh
-docker-compose backend backend python manage.py loaddata fixtures.json
+docker-compose backend python manage.py loaddata fixtures.json
 ```
 - Перейдите по адресу:
 ```sh
