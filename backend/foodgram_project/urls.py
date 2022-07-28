@@ -13,6 +13,7 @@ schema_view = get_schema_view(
         default_version='v1',
         description="foodgram_project backend",
     ),
+    url='http://food-merk.sytes.net:8000',
     public=True,
     permission_classes=[permissions.AllowAny],
 )
