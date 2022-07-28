@@ -1,6 +1,7 @@
 # Foodgram Project
 
-[food-merk.sytes.net](http://food-merk.sytes.net/)
+[food-merk.sytes.net](http://food-merk.sytes.net/) \
+[swagger-ui](http://food-merk.sytes.net/swagger/)
 
 ![example workflow](https://github.com/aimerkz/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
@@ -13,6 +14,7 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
 
 
 Cервис для публикаций и обмена рецептами.
