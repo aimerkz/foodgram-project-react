@@ -20,7 +20,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '158.160.0.181',
     'localhost',
-    'backend'
+    'backend',
+    'food-merk.sytes.net'
 ]
 
 # Application definition
