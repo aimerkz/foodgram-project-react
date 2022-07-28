@@ -1,5 +1,7 @@
 # Foodgram Project
 
+[food-merk.sytes.net](http://food-merk.sytes.net/)
+
 ![example workflow](https://github.com/aimerkz/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -62,5 +64,6 @@ docker-compose exec backend python manage.py loaddata fixtures.json
 ```
 - Перейдите по адресу:
 ```sh
-http://158.160.0.181/
+[158.160.0.181](http://158.160.0.181/)
+[food-merk.sytes.net](http://food-merk.sytes.net/)
 ```
