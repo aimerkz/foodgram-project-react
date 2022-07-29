@@ -38,6 +38,7 @@ services:
       - media_value:/usr/share/nginx/html/media/:ro
     depends_on:
       - backend
+      - frontend
 
 volumes:
   backend_static:
