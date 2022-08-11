@@ -23,6 +23,7 @@ class RecipeAdmin(admin.ModelAdmin):
     list_display = ("name", "author", "count_favorited")
     list_filter = ("name", "author", "tags")
     empty_value_display = "-пусто-"
+    inlines = (IngredientsInline, )
 
     def count_favorited(self, obj):
         """Метод выводит общее число добавлений рецепта в избранное"""
