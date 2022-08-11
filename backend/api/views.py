@@ -12,6 +12,8 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
+from django.utils.decorators import method_decorator
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -38,37 +40,35 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ["^name"]
 
 
+@swagger_auto_schema(
+    method='POST',
+    operation_summary=
+    {
+        "ingredients": [
+            {
+                "id": 1123,
+                "amount": 10
+            },
+            {
+                "id": 1124,
+                "amount": 20
+            }
+        ],
+        "tags": [
+            1,
+            2
+        ],
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAgMAAABieywaAAAACVBMVEUAAAD///9fX1/S0ecCAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNoAAAAggCByxOyYQAAAABJRU5ErkJggg==",
+        "name": "string",
+        "text": "string",
+        "cooking_time": 1
+    })
 class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсэт Рецепт
     Получение списка рецептов /
     конкретного рецепта /
     создание, редактирование /
     удаление рецепта
-
-    _____________________
-    #### Пример по созданию рецепта
-    ```
-    {
-      "ingredients": [
-        {
-          "id": 1123,
-          "amount": 10
-        },
-        {
-         "id": 1124,
-          "amount": 20
-        }
-      ],
-      "tags": [
-        1,
-        2
-      ],
-      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAgMAAABieywaAAAACVBMVEUAAAD///9fX1/S0ecCAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNoAAAAggCByxOyYQAAAABJRU5ErkJggg==",
-      "name": "string",
-      "text": "string",
-      "cooking_time": 1
-    }
-    ```
     """
 
     serializer_class = RecipeSerializer
@@ -181,7 +181,7 @@ class ShoppingViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        """Метод для добавление рецепта в
+        """Метод для добавления рецепта в
         список покупок
         """
         recipe_id = self.kwargs["id"]
@@ -194,7 +194,7 @@ class ShoppingViewSet(viewsets.ModelViewSet):
         )
 
     def delete(self, request, *args, **kwargs):
-        """Метод для удаление рецепта из
+        """Метод для удаления рецепта из
         списка покупок
         """
         recipe_id = self.kwargs["id"]
