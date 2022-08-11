@@ -1,0 +1,35 @@
+#!/bin/sh
+
+if python3 -m mypy backend/
+then
+	echo "mypy has been finished successfully"
+else
+	echo "mypy error"
+	exit -1
+fi
+
+if python3 -m flake8 backend/
+then
+	echo "flake8 has been finished successfully"
+else
+	echo "flake8 error"
+	exit -1
+fi
+
+if python3 -m black backend/
+then
+	echo "black has been finished successfully"
+else
+	echo "black error"
+	exit -1
+fi
+
+if python3 -m isort backend/
+then
+	echo "isort has been finished successfully"
+else
+	echo "isort error"
+	exit -1
+fi
+
+exit 0

@@ -10,7 +10,7 @@ from rest_framework import permissions
 schema_view = get_schema_view(
     openapi.Info(
         title="API foodgram_project",
-        default_version='v1',
+        default_version="v1",
         description="foodgram_project backend",
     ),
     public=True,
@@ -18,19 +18,19 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls', namespace='api')),
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls", namespace="api")),
     url(
-        r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(
-            cache_timeout=0),
-        name='schema-json'
+        r"^swagger(?P<format>\.json|\.yaml)$",
+        schema_view.without_ui(cache_timeout=0),
+        name="schema-json",
     ),
     url(
-        r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0),
-        name='schema-swagger-ui'
+        r"^swagger/$",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
     ),
     url(
-        r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0),
-        name='schema-redoc'
+        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
     ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

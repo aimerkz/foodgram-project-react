@@ -5,22 +5,25 @@ from users.models import CustomUser
 
 
 class IngredientSearchFilter(SearchFilter):
-    search_param = 'name'
+    """Кастомный фильтр для поиска
+    ингредиентов по названию"""
+
+    search_param = "name"
 
 
 class RecipesFilter(FilterSet):
     """Кастомный фильтр для рецептов по
     избранному, автору, списку покупок и
     тегам"""
+
     author = filters.ModelChoiceFilter(queryset=CustomUser.objects.all())
-    tags = filters.AllValuesMultipleFilter(field_name='tags__slug')
-    is_favorited = filters.BooleanFilter(method='filter_is_favorited')
-    is_in_shopping_cart = filters.BooleanFilter(
-        method='filter_is_in_shopping_cart')
+    tags = filters.AllValuesMultipleFilter(field_name="tags__slug")
+    is_favorited = filters.BooleanFilter(method="filter_is_favorited")
+    is_in_shopping_cart = filters.BooleanFilter(method="filter_is_in_shopping_cart")
 
     class Meta:
         model = Recipe
-        fields = ['author', 'tags']
+        fields = ["author", "tags"]
 
     def filter_is_favorited(self, queryset, name, value):
         if value:

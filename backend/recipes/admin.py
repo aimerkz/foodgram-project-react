@@ -4,20 +4,20 @@ from recipes.models import (Follow, Ingredient, IngredientRecipes, Recipe,
 
 
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'color', 'slug')
-    empty_value_display = '-пусто-'
+    list_display = ("name", "color", "slug")
+    empty_value_display = "-пусто-"
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'measurement_unit')
-    empty_value_display = '-пусто-'
-    list_filter = ('name',)
+    list_display = ("name", "measurement_unit")
+    empty_value_display = "-пусто-"
+    list_filter = ("name",)
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'author', 'count_favorited')
-    list_filter = ('name', 'author', 'tags')
-    empty_value_display = '-пусто-'
+    list_display = ("name", "author", "count_favorited")
+    list_filter = ("name", "author", "tags")
+    empty_value_display = "-пусто-"
 
     def count_favorited(self, obj):
         """Метод выводит общее число добавлений рецепта в избранное"""
@@ -25,25 +25,25 @@ class RecipeAdmin(admin.ModelAdmin):
 
 
 class IngredientRecipesAdmin(admin.ModelAdmin):
-    list_display = ('ingredients', 'recipes', 'amount')
+    list_display = ("ingredients", "recipes", "amount")
 
 
 class ShoppingListAdmin(admin.ModelAdmin):
-    list_display = ('user', 'recipes')
-    search_fields = ('user', 'recipes')
-    list_filter = ('user', 'recipes')
+    list_display = ("user", "recipes")
+    search_fields = ("user", "recipes")
+    list_filter = ("user", "recipes")
 
 
 class RecipeFavoritesAdmin(admin.ModelAdmin):
-    list_display = ('user', 'recipes')
-    search_fields = ('user', 'recipes')
-    list_filter = ('user', 'recipes')
+    list_display = ("user", "recipes")
+    search_fields = ("user", "recipes")
+    list_filter = ("user", "recipes")
 
 
 class FollowAdmin(admin.ModelAdmin):
-    list_display = ('user', 'author')
-    search_fields = ('user', 'author')
-    list_filter = ('user', 'author')
+    list_display = ("user", "author")
+    search_fields = ("user", "author")
+    list_filter = ("user", "author")
 
 
 admin.site.register(Tag, TagAdmin)

@@ -14,22 +14,18 @@ def ingredient_create(row):
 
 
 action = {
-    'ingredients.csv': ingredient_create,
+    "ingredients.csv": ingredient_create,
 }
 
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument(
-            'filename',
-            nargs='+',
-            type=str
-        )
+        parser.add_argument("filename", nargs="+", type=str)
 
     def handle(self, *args, **options):
-        for filename in options['filename']:
-            path = os.path.join(settings.BASE_DIR, 'data/') + filename
-            with open(path, 'r', encoding='utf-8') as file:
+        for filename in options["filename"]:
+            path = os.path.join(settings.BASE_DIR, "data/") + filename
+            with open(path, "r", encoding="utf-8") as file:
                 reader = csv.reader(file)
                 next(reader)
                 for row in reader:

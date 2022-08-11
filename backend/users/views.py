@@ -15,19 +15,13 @@ class CustomUserViewSet(UserViewSet):
     получение текущего юзера /
     просмотр подписок юзера
     """
+
     pagination_class = CustomPagination
 
-    @action(
-        detail=False,
-        permission_classes=[IsAuthenticated]
-    )
+    @action(detail=False, permission_classes=[IsAuthenticated])
     def subscriptions(self, request):
         """Метод для просмотра подписок юзера"""
         queryset = self.request.user.follower.all()
         page = self.paginate_queryset(queryset)
-        serializer = FollowSerializer(
-            page,
-            many=True,
-            context={'request': request}
-        )
+        serializer = FollowSerializer(page, many=True, context={"request": request})
         return self.get_paginated_response(serializer.data)
