@@ -14,6 +14,11 @@ class IngredientAdmin(admin.ModelAdmin):
     list_filter = ("name",)
 
 
+class IngredientsInline(admin.TabularInline):
+    model = IngredientRecipes
+    raw_id_fields = ('ingredients', )
+
+
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ("name", "author", "count_favorited")
     list_filter = ("name", "author", "tags")
