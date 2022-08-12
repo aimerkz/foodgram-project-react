@@ -138,3 +138,4 @@ dmypy.json
 # Папки со статикой и медиа
 **/static
 **/media
+**/backend_static

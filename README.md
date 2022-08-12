@@ -70,5 +70,4 @@ docker-compose exec backend python manage.py collectstatic --no-input
 docker-compose exec backend python manage.py loaddata fixtures.json
 ```
 - Перейдите по адресу: \
-[158.160.0.181](http://158.160.0.181/) \
 [food-merk.sytes.net](http://food-merk.sytes.net/)
