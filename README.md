@@ -1,7 +1,6 @@
 # Foodgram Project
 
-[food-merk.sytes.net](http://food-merk.sytes.net/) \
-[swagger-ui](http://food-merk.sytes.net/swagger/)
+[food-merk.sytes.net](http://food-merk.sytes.net/)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -22,9 +21,14 @@
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
 
-Cервис для публикаций и обмена рецептами.
+__Cервис для публикаций и обмена рецептами.__
 
-Авторизованные пользователи могут подписываться на понравившихся авторов, добавлять рецепты в избранное, в покупки, скачивать список покупок. Неавторизованным пользователям доступна регистрация, авторизация, просмотр рецептов других пользователей.
+*Авторизованные пользователи могут подписываться на понравившихся авторов, добавлять рецепты в избранное, в покупки, скачивать список покупок. Неавторизованным пользователям доступна регистрация, авторизация, просмотр рецептов других пользователей.*
+
+:open_file_folder: Документация к API проекта:
+
+[Swagger-ui](http://food-merk.sytes.net/swagger/) \
+[Redoc](http://food-merk.sytes.net/api/docs/)
 
 ## _Запуск_:
  - Клонируйте репозиторий на свою локальную машину:
