@@ -208,8 +208,8 @@ class FollowSerializer(serializers.ModelSerializer):
         """Метод для получения
         рецептов автора
         """
-        request = self.context["request"]
-        limit = request.GET["recipes_limit"]
+        request = self.context.get("request")
+        limit = request.GET.get("recipes_limit")
         queryset = Recipe.objects.filter(author=obj.author)
         if limit:
             queryset = queryset[: int(limit)]

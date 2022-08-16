@@ -1,3 +1,4 @@
+import drf_yasg.utils
 from api.filters import IngredientSearchFilter, RecipesFilter
 from api.pagination import CustomPagination
 from api.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
@@ -124,6 +125,7 @@ class RecipeFavoritesViewSet(viewsets.ModelViewSet):
     queryset = RecipeFavorites.objects.all()
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(request_body=drf_yasg.utils.no_body)
     def create(self, request, *args, **kwargs):
         """Метод для добавления рецепта
         в список избранного
@@ -159,6 +161,7 @@ class FollowViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPagination
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(request_body=drf_yasg.utils.no_body)
     def create(self, request, *args, **kwargs):
         """Метод для создания подписки"""
         user_id = self.kwargs["id"]
@@ -187,6 +190,7 @@ class ShoppingViewSet(viewsets.ModelViewSet):
     queryset = ShoppingList.objects.all()
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(request_body=drf_yasg.utils.no_body)
     def create(self, request, *args, **kwargs):
         """Метод для добавления рецепта в
         список покупок
